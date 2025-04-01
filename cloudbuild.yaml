@@ -62,18 +62,16 @@ steps:
 
 # Run the Dataflow job using the Flex Template (Step 4)
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: 'gcloud'
+    entrypoint: 'bash'
     args:
-      [
-      'dataflow',
-      'flex-template',
-      'run',
-      'streaming-purchase-${_TIMESTAMP}',
-      '--project=${_PROJECT_ID}',
-      '--region=${_REGION}',
-      '--template-file-gcs-location=gs://${_BUCKET}/templates/${_TEMPLATE_NAME}.json',
-      '--service-account-email=${_SERVICE_ACCOUNT}',
-    ]
+      - -c
+      - |
+        set -e
+        gcloud dataflow flex-template run "streaming-purchase-$(date +%Y%m%d%H%M%S)" \
+        --project="${_PROJECT_ID}" \
+        --region="${_REGION}" \
+        --template-file-gcs-location="gs://${_BUCKET}/templates/${_TEMPLATE_NAME}.json" \
+        --service-account-email="${_SERVICE_ACCOUNT}"
 
 timeout: 900s
 options:
