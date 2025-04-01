@@ -52,7 +52,7 @@ steps:
       'build',
       'gs://${_BUCKET}/templates/${_TEMPLATE_NAME}.json',
       '--image',
-      'us-docker.pkg.dev/${_PROJECT_ID}/${_IMAGE_NAME}',
+      'us-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}',
       '--sdk-language',
       'PYTHON',
       '--metadata-file',
