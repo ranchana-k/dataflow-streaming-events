@@ -5,12 +5,28 @@ substitutions:
   _IMAGE_NAME: "dataflow-pipeline"
   _REGION: "us-central1"
   _SERVICE_ACCOUNT: "1046723826220-compute@developer.gserviceaccount.com"
-  _INPUT_TOPIC: "projects/YOUR_PROJECT_ID/topics/YOUR_TOPIC"
   _AGG_WINDOW: "10"
   _ALERT_WINDOW: "1"
+  _MULTI_REGION: "us"
 
 steps:
   # 1) Build Docker image containing your pipeline code
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        set -e
+        echo "Checking for existing Artifact Registry repo..."
+        if ! gcloud artifacts repositories describe "${_REPO_NAME}" --location="${_MULTI_REGION}" >/dev/null 2>&1; then
+          echo "Repo '${_REPO_NAME}' not found. Creating..."
+          gcloud artifacts repositories create "${_REPO_NAME}" \
+            --repository-format=docker \
+            --location="${_MULTI_REGION}" \
+            --description="My Docker repo (auto-created in Cloud Build)"
+        else
+          echo "Repo '${_REPO_NAME}' already exists."
+        fi
   - name: 'gcr.io/cloud-builders/docker'
     args:
       [
@@ -35,7 +51,7 @@ steps:
       'build',
       'gs://${_BUCKET}/templates/${_TEMPLATE_NAME}.json',
       '--image',
-      'gcr.io/${_PROJECT_ID}/${_IMAGE_NAME}',
+      'us-docker.pkg.dev/${_PROJECT_ID}/${_IMAGE_NAME}',
       '--sdk-language',
       'PYTHON',
       '--metadata-file',
@@ -54,8 +70,6 @@ steps:
       '--region=${_REGION}',
       '--template-file-gcs-location=gs://${_BUCKET}/templates/${_TEMPLATE_NAME}.json',
       '--service-account-email=${_SERVICE_ACCOUNT}',
-      '--parameters',
-      'input_topic=${_INPUT_TOPIC},aggregation_window_sec=${_AGG_WINDOW}'
     ]
 
 timeout: 900s
