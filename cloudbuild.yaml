@@ -32,7 +32,7 @@ steps:
     args:
       [
         'build',
-        '-t', 'us-docker.pkg.dev/${_PROJECT_ID}/${_IMAGE_NAME}',
+        '-t', 'us-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}',
         '.'
       ]
 
@@ -41,7 +41,7 @@ steps:
     args:
       [
         'push',
-        'us-docker.pkg.dev/${_PROJECT_ID}/${_IMAGE_NAME}'
+        'us-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}'
       ]
 
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
