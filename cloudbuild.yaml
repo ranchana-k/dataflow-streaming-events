@@ -1,0 +1,85 @@
+
+
+steps:
+  - name: 'python:3.10-slim'
+    entrypoint: bash
+    args:    
+      - -c
+      - |
+        #!/bin/bash
+        export AGG_WINDOW=$_AGG_WINDOW
+        export ALERT_WINDOW=$_ALERT_WINDOW
+        export REGION=$_REGION
+        export BUCKET=$_BUCKET
+        export PROJECT_ID=$_PROJECT_ID
+        export SERVICE_ACCOUNT_EMAIL="${_PROJECT_NUMBER}-compute@developer.gserviceaccount.com"
+        chmod +x run_pipeline.sh
+        ./run_pipeline.sh
+
+
+
+
+substitutions:
+  _PROJECT_ID: "rugged-precept-451103-n9"
+  _BUCKET: "dataflow-test-ranchana"          # For storing template files
+  _TEMPLATE_NAME: "my-streaming-template"
+  _IMAGE_NAME: "dataflow-pipeline"
+  _REGION: "us-central1"
+  _SERVICE_ACCOUNT: "1046723826220-compute@developer.gserviceaccount.com"
+  _INPUT_TOPIC: "projects/YOUR_PROJECT_ID/topics/YOUR_TOPIC"
+  _AGG_WINDOW: "10"
+  _ALERT_WINDOW: "1"
+
+steps:
+  # 1) Build Docker image containing your pipeline code
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      [
+        'build',
+        '-t', 'gcr.io/${_PROJECT_ID}/${_IMAGE_NAME}',
+        '.'
+      ]
+
+  # 2) Push it to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      [
+        'push',
+        'gcr.io/${_PROJECT_ID}/${_IMAGE_NAME}'
+      ]
+
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    args:
+      [
+      'dataflow',
+      'flex-template',
+      'build',
+      'gs://${_BUCKET}/templates/${_TEMPLATE_NAME}.json',
+      '--image',
+      'gcr.io/${_PROJECT_ID}/${_IMAGE_NAME}',
+      '--sdk-language',
+      'PYTHON',
+      '--metadata-file',
+      'metadata.json'
+      ]
+
+# Run the Dataflow job using the Flex Template (Step 4)
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    args:
+      [
+      'dataflow',
+      'flex-template',
+      'run',
+      'streaming-purchase-$(date +%Y%m%d%H%M%S)',
+      '--project=${_PROJECT_ID}',
+      '--region=${_REGION}',
+      '--template-file-gcs-location=gs://${_BUCKET}/templates/${_TEMPLATE_NAME}.json',
+      '--service-account-email=${_SERVICE_ACCOUNT}',
+      '--parameters',
+      'input_topic=${_INPUT_TOPIC},aggregation_window_sec=${_AGG_WINDOW}'
+    ]
+
+timeout: 600s
+options:
+  logging: CLOUD_LOGGING_ONLY
+

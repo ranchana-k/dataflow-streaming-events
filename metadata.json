@@ -1,0 +1,56 @@
+{
+    "name": "my-streaming-pipeline",
+    "description": "A streaming pipeline that reads purchase events from Pub/Sub, writes aggregations to BigQuery, and sends alerts to another Pub/Sub topic.",
+    "parameters": [
+      {
+        "name": "input_topic",
+        "label": "Pub/Sub Input Topic",
+        "helpText": "Full Pub/Sub topic name to read streaming events (e.g. projects/PROJECT_ID/topics/TOPIC_NAME)",
+        "paramType": "TEXT",
+        "default": "projects/rugged-precept-451103-n9/topics/streaming-events"
+      },
+      {
+        "name": "alert_topic",
+        "label": "Alert Topic",
+        "helpText": "Pub/Sub topic to send high-volume alerts (e.g. projects/PROJECT_ID/topics/TOPIC_NAME)",
+        "paramType": "TEXT",
+        "default": "projects/rugged-precept-451103-n9/topics/high-volume-alerts"
+      },
+      {
+        "name": "output_table",
+        "label": "BigQuery Output Table",
+        "helpText": "BigQuery table to write aggregated purchase data (PROJECT:DATASET.TABLE)",
+        "paramType": "TEXT",
+        "default": "rugged-precept-451103-n9:dataflow_test.purchase_summary"
+      },
+      {
+        "name": "aggregation_window_sec",
+        "label": "Aggregation Window (seconds)",
+        "helpText": "Duration of the fixed window for grouping purchase data",
+        "paramType": "TEXT",
+        "default": "10"
+      },
+      {
+        "name": "alert_window_sec",
+        "label": "Alert Window (seconds)",
+        "helpText": "Duration of the fixed window for generating alerts",
+        "paramType": "TEXT",
+        "default": "1"
+      },
+      {
+        "name": "project",
+        "label": "GCP Project ID",
+        "helpText": "Google Cloud project ID where the Dataflow job will run",
+        "paramType": "TEXT",
+        "default": "rugged-precept-451103-n9"
+      },
+      {
+        "name": "region",
+        "label": "GCP Region",
+        "helpText": "Region in which the Dataflow job will run (e.g. us-central1)",
+        "paramType": "TEXT",
+        "default": "us-central1"
+      }
+    ]
+  }
+  
