@@ -1,5 +1,5 @@
 # Use Google Cloud SDK base image (which has "gcloud" pre-installed)
-FROM gcr.io/google.com/cloudsdktool/cloud-sdk:latest
+FROM python:3.10-slim
 
 # Install Python 3 and pip
 RUN apt-get update && apt-get install -y python3 python3-pip
