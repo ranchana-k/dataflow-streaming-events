@@ -76,11 +76,11 @@ steps:
         --region="${_REGION}" \
         --template-file-gcs-location="gs://${_BUCKET}/templates/${_TEMPLATE_NAME}.json" \
         --service-account-email="${_SERVICE_ACCOUNT}" \
-        --parameters alert_window_sec="${_ALERT_WINDOW}",\
-          aggregation_window_sec="${_AGG_WINDOW}",\
-          input_topic="${_INPUT_TOPIC}",\
-          alert_topic="${_ALERT_TOPIC}",\
-          output_table="${_OUTPUT_TABLE}" 
+        --parameters=alert_window_sec="${_ALERT_WINDOW}",\
+        aggregation_window_sec="${_AGG_WINDOW}",\
+        input_topic="${_INPUT_TOPIC}",\
+        alert_topic="${_ALERT_TOPIC}",\
+        output_table="${_OUTPUT_TABLE}" 
 
 timeout: 900s
 options:
