@@ -76,6 +76,8 @@ steps:
         --region="${_REGION}" \
         --template-file-gcs-location="gs://${_BUCKET}/templates/${_TEMPLATE_NAME}.json" \
         --service-account-email="${_SERVICE_ACCOUNT}" \
+        --temp_location=gs://${BUCKET}/temp \
+        --staging_location=gs://${BUCKET}/staging \
         --parameters=alert_window_sec="${_ALERT_WINDOW}",\
         aggregation_window_sec="${_AGG_WINDOW}",\
         input_topic="${_INPUT_TOPIC}",\
