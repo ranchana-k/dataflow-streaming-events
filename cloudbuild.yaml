@@ -1,6 +1,6 @@
 substitutions:
   _PROJECT_ID: "rugged-precept-451103-n9"
-  _BUCKET: "dataflow-test-ranchana"          # For storing template files
+  _BUCKET: "dataflow-test-streaming"          # For storing template files
   _TEMPLATE_NAME: "my-streaming-template"
   _REPO_NAME: "my-docker-repo"
   _IMAGE_NAME: "dataflow-pipeline"
@@ -8,7 +8,6 @@ substitutions:
   _SERVICE_ACCOUNT: "1046723826220-compute@developer.gserviceaccount.com"
   _AGG_WINDOW: "10"
   _ALERT_WINDOW: "1"
-  _MULTI_REGION: "us"
   _INPUT_TOPIC: "projects/rugged-precept-451103-n9/topics/streaming-events"
   _ALERT_TOPIC: "projects/rugged-precept-451103-n9/topics/high-volume-alerts"
   _OUTPUT_TABLE: "rugged-precept-451103-n9:dataflow_test.purchase_summary"
@@ -23,11 +22,11 @@ steps:
       - |
         set -e
         echo "Checking for existing Artifact Registry repo..."
-        if ! gcloud artifacts repositories describe "${_REPO_NAME}" --location="${_MULTI_REGION}" >/dev/null 2>&1; then
+        if ! gcloud artifacts repositories describe "${_REPO_NAME}" --location="${_REGION}" >/dev/null 2>&1; then
           echo "Repo '${_REPO_NAME}' not found. Creating..."
           gcloud artifacts repositories create "${_REPO_NAME}" \
             --repository-format=docker \
-            --location="${_MULTI_REGION}" \
+            --location="${_REGION}" \
             --description="My Docker repo (auto-created in Cloud Build)"
         else
           echo "Repo '${_REPO_NAME}' already exists."
@@ -36,7 +35,7 @@ steps:
     args:
       [
         'build', '--no-cache' ,
-        '-t', 'us-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}',
+        '-t', 'us-central1-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}',
         '.'
       ]
 
@@ -45,7 +44,7 @@ steps:
     args:
       [
         'push',
-        'us-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}'
+        'us-central1-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}'
       ]
 
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -57,7 +56,7 @@ steps:
       'build',
       'gs://${_BUCKET}/templates/${_TEMPLATE_NAME}.json',
       '--image',
-      'us-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}',
+      'us-central1-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}',
       '--sdk-language',
       'PYTHON',
       '--metadata-file',
