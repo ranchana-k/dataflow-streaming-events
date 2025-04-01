@@ -64,19 +64,7 @@ def run(argv=None):
         default=1,
         help='Fixed window duration in seconds for alerting'
     )
-    parser.add_argument(
-        '--runner',
-        default='DirectRunner',
-        help='Execution runner (DirectRunner or DataflowRunner)'
-    )
-    parser.add_argument(
-        '--project',
-        help='GCP project ID'
-    )
-    parser.add_argument(
-        '--region',
-        help='GCP region for Dataflow'
-    )
+ 
 
     known_args, pipeline_args = parser.parse_known_args(argv)
 

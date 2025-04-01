@@ -6,22 +6,19 @@
         "name": "input_topic",
         "label": "Pub/Sub Input Topic",
         "helpText": "Pub/Sub topic name to read streaming events (e.g. projects/PROJECT_ID/topics/TOPIC_NAME)",
-        "paramType": "TEXT",
-        "default": "projects/rugged-precept-451103-n9/topics/streaming-events"
+        "paramType": "TEXT"
       },
       {
         "name": "alert_topic",
         "label": "Alert Topic",
         "helpText": "Pub/Sub topic to send high-volume alerts (e.g. projects/PROJECT_ID/topics/TOPIC_NAME)",
-        "paramType": "TEXT",
-        "default": "projects/rugged-precept-451103-n9/topics/high-volume-alerts"
+        "paramType": "TEXT"
       },
       {
         "name": "output_table",
         "label": "BigQuery Output Table",
         "helpText": "BigQuery table to write aggregated purchase data (PROJECT:DATASET.TABLE)",
-        "paramType": "TEXT",
-        "default": "rugged-precept-451103-n9:dataflow_test.purchase_summary"
+        "paramType": "TEXT"
       },
       {
         "name": "aggregation_window_sec",
@@ -36,20 +33,6 @@
         "helpText": "Duration of the fixed window for generating alerts",
         "paramType": "TEXT",
         "default": "1"
-      },
-      {
-        "name": "project",
-        "label": "GCP Project ID",
-        "helpText": "Google Cloud project ID where the Dataflow job will run",
-        "paramType": "TEXT",
-        "default": "rugged-precept-451103-n9"
-      },
-      {
-        "name": "region",
-        "label": "GCP Region",
-        "helpText": "Region in which the Dataflow job will run (e.g. us-central1)",
-        "paramType": "TEXT",
-        "default": "us-central1"
       }
     ]
   }

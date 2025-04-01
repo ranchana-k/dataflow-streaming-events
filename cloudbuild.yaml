@@ -9,6 +9,10 @@ substitutions:
   _AGG_WINDOW: "10"
   _ALERT_WINDOW: "1"
   _MULTI_REGION: "us"
+  _INPUT_TOPIC: "projects/rugged-precept-451103-n9/topics/streaming-events"
+  _ALERT_TOPIC: "projects/rugged-precept-451103-n9/topics/high-volume-alerts"
+  _OUTPUT_TABLE: "rugged-precept-451103-n9:dataflow_test.purchase_summary"
+
 
 steps:
   # 1) Build Docker image containing your pipeline code
@@ -71,7 +75,12 @@ steps:
         --project="${_PROJECT_ID}" \
         --region="${_REGION}" \
         --template-file-gcs-location="gs://${_BUCKET}/templates/${_TEMPLATE_NAME}.json" \
-        --service-account-email="${_SERVICE_ACCOUNT}"
+        --service-account-email="${_SERVICE_ACCOUNT}" \
+        --parameters alert_window_sec="${_ALERT_WINDOW}",\
+          aggregation_window_sec="${_AGG_WINDOW}",\
+          input_topic="${_INPUT_TOPIC}",\
+          alert_topic="${_ALERT_TOPIC}",\
+          output_table="${_OUTPUT_TABLE}" 
 
 timeout: 900s
 options:
