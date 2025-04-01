@@ -1,15 +1,17 @@
-# Use Google Cloud SDK base image (which has "gcloud" pre-installed)
-FROM python:3.10-slim
+# Use Beam’s official Python 3.10 SDK image
+FROM apache/beam_python3.10_sdk:2.53.0
 
-
-# Create a directory in the container for your code
+# Make a directory for your code
 WORKDIR /app
 
-# Copy your requirements first
-COPY requirements.txt requirements.txt
+# Copy requirements first (for caching)
+COPY requirements.txt .
+
+# Install your Python dependencies (including apache-beam[gcp], if not already in the image)
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . /app
+# Copy the rest of your pipeline code
+COPY . .
 
-# (Optional) If you'd like to run "main.py" by default when this container starts
-# ENTRYPOINT ["python3", "main.py"]
+# This is the standard entrypoint that the Dataflow runner uses for Python Flex Templates
+ENTRYPOINT [ "/opt/apache/beam/boot" ]
