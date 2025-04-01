@@ -1,5 +1,5 @@
 # Use Beam’s official Python 3.10 SDK image
-FROM apache/beam_python3.10_sdk:2.53.0
+FROM apache/beam_python3.10_sdk:2.64.0
 
 # Make a directory for your code
 WORKDIR /app
