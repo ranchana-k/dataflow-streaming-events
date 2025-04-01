@@ -35,7 +35,7 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args:
       [
-        'build',
+        'build', '--no-cache' ,
         '-t', 'us-docker.pkg.dev/${_PROJECT_ID}/${_REPO_NAME}/${_IMAGE_NAME}',
         '.'
       ]
