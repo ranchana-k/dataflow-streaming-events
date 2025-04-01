@@ -68,7 +68,7 @@ steps:
       'dataflow',
       'flex-template',
       'run',
-      'streaming-purchase-$(date +%Y%m%d%H%M%S)',
+      'streaming-purchase-${_TIMESTAMP}',
       '--project=${_PROJECT_ID}',
       '--region=${_REGION}',
       '--template-file-gcs-location=gs://${_BUCKET}/templates/${_TEMPLATE_NAME}.json',
