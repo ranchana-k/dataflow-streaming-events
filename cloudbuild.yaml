@@ -45,6 +45,7 @@ steps:
       ]
 
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
     args:
       [
       'dataflow',
@@ -61,6 +62,7 @@ steps:
 
 # Run the Dataflow job using the Flex Template (Step 4)
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
     args:
       [
       'dataflow',
