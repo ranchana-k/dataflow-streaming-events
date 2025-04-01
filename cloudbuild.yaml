@@ -82,7 +82,9 @@ steps:
         aggregation_window_sec="${_AGG_WINDOW}",\
         input_topic="${_INPUT_TOPIC}",\
         alert_topic="${_ALERT_TOPIC}",\
-        output_table="${_OUTPUT_TABLE}" 
+        output_table="${_OUTPUT_TABLE}" \
+        temp_location="gs://${_BUCKET}/temp" \
+        staging_location="gs://${_BUCKET}/staging"
 
 timeout: 900s
 options:
