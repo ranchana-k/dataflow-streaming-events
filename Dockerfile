@@ -13,5 +13,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of your pipeline code
 COPY . .
 
+# Set environment variables required by the Flex Template launcher
+ENV FLEX_TEMPLATE_PYTHON_PY_FILE="/app/main.py"
+ENV FLEX_TEMPLATE_PYTHON_REQUIREMENTS_FILE="/app/requirements.txt"
+
 # This is the standard entrypoint that the Dataflow runner uses for Python Flex Templates
 ENTRYPOINT [ "/opt/apache/beam/boot" ]
