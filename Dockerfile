@@ -1,19 +1,14 @@
 # Use Google Cloud SDK base image (which has "gcloud" pre-installed)
 FROM python:3.10-slim
 
-# Install Python 3 and pip
-RUN apt-get update && apt-get install -y python3 python3-pip
 
 # Create a directory in the container for your code
 WORKDIR /app
 
 # Copy your requirements first
-COPY requirements.txt .
+COPY requirements.txt requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Install Apache Beam + GCP extras + any other deps
-RUN pip3 install --no-cache-dir apache-beam[gcp] -r requirements.txt
-
-# Copy the rest of your code into the container
 COPY . /app
 
 # (Optional) If you'd like to run "main.py" by default when this container starts
