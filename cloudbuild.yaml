@@ -2,6 +2,7 @@ substitutions:
   _PROJECT_ID: "rugged-precept-451103-n9"
   _BUCKET: "dataflow-test-ranchana"          # For storing template files
   _TEMPLATE_NAME: "my-streaming-template"
+  _REPO_NAME: "my-docker-repo"
   _IMAGE_NAME: "dataflow-pipeline"
   _REGION: "us-central1"
   _SERVICE_ACCOUNT: "1046723826220-compute@developer.gserviceaccount.com"
