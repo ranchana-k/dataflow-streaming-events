@@ -1,5 +1,5 @@
 # Use Beam’s official Python 3.10 SDK image
-FROM apache/beam_python3.10_sdk:2.64.0
+FROM gcr.io/dataflow-templates-base/python312-template-launcher-base:latest
 
 # Make a directory for your code
 WORKDIR /app
@@ -17,5 +17,3 @@ COPY . .
 ENV FLEX_TEMPLATE_PYTHON_PY_FILE="/app/main.py"
 ENV FLEX_TEMPLATE_PYTHON_REQUIREMENTS_FILE="/app/requirements.txt"
 
-# This is the standard entrypoint that the Dataflow runner uses for Python Flex Templates
-ENTRYPOINT [ "/opt/apache/beam/boot" ]
