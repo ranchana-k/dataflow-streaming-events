@@ -1,4 +1,4 @@
-print("✅ main.py loaded")
+print("main.py loaded")
 
 import logging
 import json

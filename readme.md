@@ -46,7 +46,7 @@ This project includes a simple Locust script (`event_generation/locustfile.py`) 
     4. Choose your **branch** (e.g. `main`) or use a regex like `.*` to match all
     5. Set the **trigger type** to: `Build configuration file`  
        → use `cloudbuild.yaml` from the root of your repo
-    6. Save the trigger
+    6. Save the trigger.
  
 
 ## IAM Roles Required

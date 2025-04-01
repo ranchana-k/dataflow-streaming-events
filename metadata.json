@@ -5,7 +5,7 @@
       {
         "name": "input_topic",
         "label": "Pub/Sub Input Topic",
-        "helpText": "Full Pub/Sub topic name to read streaming events (e.g. projects/PROJECT_ID/topics/TOPIC_NAME)",
+        "helpText": "Pub/Sub topic name to read streaming events (e.g. projects/PROJECT_ID/topics/TOPIC_NAME)",
         "paramType": "TEXT",
         "default": "projects/rugged-precept-451103-n9/topics/streaming-events"
       },

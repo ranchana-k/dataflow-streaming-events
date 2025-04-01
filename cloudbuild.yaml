@@ -79,7 +79,7 @@ steps:
       'input_topic=${_INPUT_TOPIC},aggregation_window_sec=${_AGG_WINDOW}'
     ]
 
-timeout: 600s
+timeout: 900s
 options:
   logging: CLOUD_LOGGING_ONLY
 
