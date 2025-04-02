@@ -33,18 +33,38 @@ This project includes a simple Locust script (`event_generation/locustfile.py`) 
 2. Create 2 Cloud Run Function
 
     2.1 Event receiver function: receives events from Locust (or any HTTP client) and publishes them to streaming-events.
+    
     2.2 (Optional) Alert consumer function: subscribes to high-volume-alerts to handle or display alert messages to confirm that messages reach the high-volume-alerts topic. This is optional if you only want to verify message publication in Pub/Sub.
 
 3. Create a dataset in BigQuery for storing aggregated purchase data 
-4. Running Options:
+
+4. Before deploying the pipeline, you must replace the default substitution values in your `cloudbuild.yaml` file with your own GCP project settings. The section to be edited looks like this:
+
+```
+substitutions:
+  _PROJECT_ID: "YOUR_PROJECT_ID"
+  _BUCKET: "YOUR_BUCKET_NAME" # for storing dataflow templates 
+  _TEMPLATE_NAME: "YOUR_CUSTOME_TEMPLATE_NAME"
+  _REPO_NAME: "YOUR_DOCKER_NAME"
+  _IMAGE_NAME: "IMAGE_NAME"
+  _REGION: "YOUR_REGION"
+  _SERVICE_ACCOUNT: "<PROJECT_ID>-compute@developer.gserviceaccount.com"
+  _AGG_WINDOW: "10"
+  _ALERT_WINDOW: "1"
+  _INPUT_TOPIC: "YOUR_INPUT_TOPIC_PATH"
+  _ALERT_TOPIC: "YOUR_ALERT_TOPIC_PATH"
+  _OUTPUT_TABLE: "YOUR_BIGQUERY_TABLE"
+```
+5. Running Options:
     
-    2.1 Run locally
+    5.1 Run locally
       ```
       python main.py --runner=DirectRunner
       ```
    
-    2.2 Deploy CI/CD Pipeline Using Cloud Build Trigger  
+    5.2 Deploy CI/CD Pipeline Using Cloud Build Trigger  
     Set up a Cloud Build Trigger to automatically deploy on new commits to your GitHub repo.
+    
     🔧 **Steps to set it up:**
     
     1. Enable necessary API by going to the console or run a command 
