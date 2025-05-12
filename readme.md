@@ -6,9 +6,9 @@ This project is a real-time streaming data pipeline built using Apache Beam on G
 ├── event_generation/
 │   └── locustfile.py         # Simulates streaming events for testing
 ├── main.py                   # Main Beam pipeline script
-├── run_pipeline.sh           # Shell script to trigger the pipeline
-├── cloudbuild.yaml           # Cloud Build config for CI/CD
-└── pipeline_config.json      # Optional config file for local development
+├── requirements.txt          # Dependencies for your pipeline
+├── metadata.json             # Pipeline template metadata (including Docker image used and pipeline parameters)
+└── cloudbuild.yaml           # Cloud Build config for CI/CD
 ```
 
 ## 🧪 Event Simulation
