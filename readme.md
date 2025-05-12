@@ -7,6 +7,7 @@ This project is a real-time streaming data pipeline built using Apache Beam on G
 │   └── locustfile.py         # Simulates streaming events for testing
 ├── main.py                   # Main Beam pipeline script
 ├── requirements.txt          # Dependencies for your pipeline
+├── Dockerfile                # Used to build a container that runs the Dataflow job
 ├── metadata.json             # Pipeline template metadata (including Docker image used and pipeline parameters)
 └── cloudbuild.yaml           # Cloud Build config for CI/CD
 ```
